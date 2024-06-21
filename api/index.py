@@ -14,7 +14,9 @@ from io import BytesIO
 import logging
 
 app = Flask(__name__)
-
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+}
 # Setup logging
 logging.basicConfig(level=logging.INFO)
 
@@ -26,7 +28,7 @@ def get_new_memes():
     """
     url = 'https://www.reddit.com/r/ProgrammerHumor/'
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=HEADERS)
         response.raise_for_status()
         soup = BeautifulSoup(response.content, "lxml")
         divs = soup.find_all('div', class_='media-lightbox-img')
